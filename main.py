@@ -76,21 +76,34 @@ def player_move():
 # 评估函数
 def evaluate(board): 
   score = 0
+  # 评估活二数量
+  my_live_two = count_all_series(board, 2, 2)
+  score += my_live_two * 32
+
+  opponent_live_two = count_all_series(board, 1, 2)  
+  score -= opponent_live_two * 48
   
   # 评估活三数量
   my_live_three = count_all_series(board, 2, 3)
-  score += my_live_three * 100
+  score += my_live_three * 160
 
   opponent_live_three = count_all_series(board, 1, 3)  
-  score -= opponent_live_three * 50
+  score -= opponent_live_three * 240
 
   # 评估活四数量
   my_live_four = count_all_series(board, 2, 4)
-  score += my_live_four * 1000
+  score += my_live_four * 800
     
   opponent_live_four = count_all_series(board, 1, 4)
-  score -= opponent_live_four * 500
-
+  score -= opponent_live_four * 1200
+  
+  # 评估胜利
+  if check_win(2):
+    score += 4000
+    
+  elif check_win(1):        
+    score -= 6000
+  
   # 评估占据中点的加分
   if board[7][7] == 2:
     score += 30
