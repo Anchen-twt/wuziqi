@@ -160,8 +160,16 @@ def computer_move():
    
   for row in range(SIZE):
     for col in range(SIZE):     
-      if valid_move(row, col):     
+      if valid_move(row, col): 
+        # 启发式评估
+        heuristic_score = evaluate(board)  
+         
+        if heuristic_score > best_score:
+          best_row = row
+          best_col = col 
+          best_score = heuristic_score    
         board[row][col] = 2
+        
         # DFS搜索评分
         score = -dfs(depth-1, 2)
         board[row][col] = 0         
